@@ -13,7 +13,7 @@ def make_activation(connection):
             customer_name CHAR(64),
             device_name CHAR(64),
             service_name CHAR(64),
-            start_date TIMESTAMP,
+            start_date CHAR(20),
             latitude CHAR(16),
             longitude CHAR(16),
             lat_real REAL,

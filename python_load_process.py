@@ -133,10 +133,10 @@ def fetch_customer_device_id(connection, customer_name, device_name):
     return rowid
 
 def bad_references(counts, connection, row):
-    bad = not all([
-        fetch_customer_id(connection, row['customer_name']) is not None,
-        fetch_service_id(connection, row['service_name']) is not None,
-        fetch_customer_device_id(connection, row['customer_name'], row['device_name']) is not None,
+    bad = any([
+        fetch_customer_id(connection, row['customer_name']) is None,
+        fetch_service_id(connection, row['service_name']) is None,
+        fetch_customer_device_id(connection, row['customer_name'], row['device_name']) is None,
     ])
     count_name = 'invalid references' if bad else 'valid references'
     counts[count_name] += 1
