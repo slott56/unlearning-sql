@@ -1,0 +1,19 @@
+# {{application_name}} configuration
+[logging]
+  version = 1
+  incremental = false
+
+[logging.formatters.short]
+  format = '%(name)-16s %(levelname)-8s %(message)s'
+
+[logging.handlers.console]
+ class = "logging.StreamHandler"
+  formatter = "short"
+
+[logging.root]
+  handlers = ["console"]
+  level = "INFO"
+
+[logging.loggers.application_name]
+  handlers = ["console"]
+  propagate = false

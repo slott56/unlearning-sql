@@ -1,0 +1,5 @@
+jsonschema[format]==4.4.0
+pytest==7.1.2
+behave==1.2.6
+toml==0.10.2
+tox==3.25.1
