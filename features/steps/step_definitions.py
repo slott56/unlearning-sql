@@ -10,7 +10,7 @@ from textwrap import dedent
     
 @given(u'a file of activations')
 def step_impl(context):
-    temp_path = Path("temp_activations.data")
+    temp_path = Path("data/temp_activations.data")
     context.config.cleanup.append(temp_path)
     with temp_path.open('w', newline='') as temp_file:
         writer = csv.writer(temp_file)
@@ -79,22 +79,28 @@ def step_impl(context):
 
 @when(u'the python_load_process.py application is run')
 def step_impl(context):
-    context.config.cleanup.append(Path("temp_load.csv"))
+    context.config.cleanup.append(Path("data/temp_load.csv"))
     command = [
-        "python", "python_load_process.py", 
-            "--db", "temp.db", 
-            "-o", "temp_load.csv", 
-            "temp_activations.data"
+        "python", "src/python_load_process.py",
+            "--db", "data/temp.db",
+            "-o", "data/temp_load.csv",
+            "data/temp_activations.data"
     ]
-    capture_path = Path("temp_output.log")
-    with capture_path.open('w') as capture:
-        subprocess.run(command, 
-            check=True, text=True,
-            stdout=capture
-        )
-    context.config.process_log = capture_path.read_text()
-    print(context.config.process_log)
-    context.config.cleanup.append(capture_path)
+    capture_path = Path("data/temp_output.log")
+    try:
+        with capture_path.open('w') as capture:
+            subprocess.run(command,
+                check=True, text=True,
+                stdout=capture, stderr=subprocess.STDOUT
+            )
+        context.config.process_log = capture_path.read_text()
+        print(context.config.process_log)
+        context.config.cleanup.append(capture_path)
+    except subprocess.CalledProcessError as ex:
+        print(ex)
+        print("LOG")
+        print(capture_path.read_text())
+        raise
 
 
 @then(u'the {saved} record(s) with valid data are loaded')
@@ -109,7 +115,7 @@ def step_impl(context, invalid):
 
 @then(u'the output file has 1 valid record')
 def step_impl(context):
-    output_path = Path("temp_load.csv")
+    output_path = Path("data/temp_load.csv")
     with output_path.open() as output_file:
         output_reader = csv.DictReader(output_file)
         results = list(output_reader)
@@ -117,7 +123,7 @@ def step_impl(context):
         {
             'customer_device_id': '1', 
             'service_id': '1', 
-            'start_date': '2022-07-10 11:12:13',
+            'start_date': '2022-07-10 11:12:13+00:00',
             'latitude': '35.35472166666667', 
             'longitude': '-82.52722166666666'
         }

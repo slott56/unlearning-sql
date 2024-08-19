@@ -1,0 +1,11 @@
+jsonschema[format]
+pydantic
+python-dateutil
+
+# Local Development clones... (Your names will *not* match these.)
+# -e /Users/slott/github/local/DataSynthTool
+# -e /Users/slott/github/local/functional-SQL
+
+# GitHub references...
+git+https://github.com/slott56/DataSynthTool.git@v2024.8
+git+https://github.com/slott56/functional-SQL.git@v2024.8

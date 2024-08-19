@@ -1,24 +1,38 @@
-.PHONY : diagrams sql_load python_load test acceptance
+.PHONY : diagrams db_prep sql_load python_load test acceptance
 
-SOURCE_DIAGRAMS = database.png
+SOURCE_DIAGRAMS = docs/database.png
 
 diagrams: $(SOURCE_DIAGRAMS)
 
-$(SOURCE_DIAGRAMS) : database.uml
-	java -jar plantuml-1.2022.6.jar $<
+$(SOURCE_DIAGRAMS): docs/database.uml
+	java -jar plantuml-1.2024.6.jar $<
 
-unlearning_sql.db activation_source.data : activation_source.schema.json fake_data.py
-	python fake_data.py
-	python sql_db_preparation.py
-	
-sql_load: unlearning_sql.db activation_source.data sql_load_process.py
-	python sql_load_process.py
+# Make a database for use with the sql_load example.
+db_prep: data/activation_source.csv src/fake_data.py src/sql_db_preparation.py
+	python src/fake_data.py --schema activation_source.schema --output data/activation_source.csv
+	python src/sql_db_preparation.py --schema activation_source.schema --db data/unlearning_sql.db data/activation_source.csv
 
-python_load: unlearning_sql.db activation_source.data python_load_process.py
-	python python_load_process.py --db unlearning_sql.db -o activation_load.csv activation_source.data
+# Load using SQL commands
+sql_load: data/unlearning_sql.db data/activation_source.csv src/sql_load_process.py
+	python src/sql_load_process.py --db data/unlearning_sql.db data/activation_source.csv
+
+define sqlite_script_text
+sqlite3 data/unlearning_sql.db <<EOF
+.import -v --csv --skip 1 data/activation_load.csv CUSTOMER_DEVICE_SERVICE
+EOF
+endef
+export sqlite_load = $(value sqlite_script_text)
+
+# Load using Pure Python
+python_load: data/unlearning_sql.db data/activation_source.csv src/python_load_process.py
+	python src/python_load_process.py --db data/unlearning_sql.db -o data/activation_load.csv data/activation_source.csv
+	# sqlite bulk import
+	@ eval "$$sqlite_load"
+	python src/python_extract_1.py --db data/unlearning_sql.db -o data/service_name_counts.csv
 
 test:
-	pytest
+	PYTHONPATH=src pytest
+	ruff check src
 
 acceptance:
 	behave

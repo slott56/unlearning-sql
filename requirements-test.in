@@ -1,0 +1,6 @@
+pytest
+behave
+pyright
+ruff
+tox
+pip-tools

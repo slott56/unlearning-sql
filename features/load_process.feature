@@ -1,9 +1,9 @@
-Feature: Loads activation records from an external source 
+Feature: Loads activation records from an external source
 Scenario: Loads a file with a mixture of good and bad records
   Given a file of activations
       | customer_name | device_name | service_name | start_date | latitude | longitude |
-      | customer x | device y | service z | 2022-07-10T11:12:13Z | 35°21.2833′N | 082°31.6333′W |
-      | | device y | service z | 2022-07-10T11:12:13Z | 35°21.2833′N | 082°31.6333′W |
+      | customer x | device y | service z | 2022-07-10T11:12:13+00:00 | 35°21.2833′N | 082°31.6333′W |
+      | | device y | service z | 2022-07-10T11:12:13+00:00 | 35°21.2833′N | 082°31.6333′W |
   And a working test database
   And the database has matching customers
       | customeer_name |

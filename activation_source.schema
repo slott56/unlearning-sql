@@ -1,0 +1,63 @@
+{
+  "$id": "activation_source.schema",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "The source activation records from some other application.\nMust be reformatted and validated to be useful.",
+  "properties": {
+    "customer_name": {
+      "domain": "name",
+      "maxLength": 64,
+      "minLength": 1,
+      "title": "Customer Name",
+      "type": "string"
+    },
+    "device_name": {
+      "domain": "name",
+      "maxLength": 16,
+      "minLength": 1,
+      "title": "Device Name",
+      "type": "string"
+    },
+    "device_type_name": {
+      "domain": "name",
+      "maxLength": 8,
+      "minLength": 1,
+      "title": "Device Type Name",
+      "type": "string"
+    },
+    "service_name": {
+      "domain": "name",
+      "maxLength": 16,
+      "minLength": 1,
+      "title": "Service Name",
+      "type": "string"
+    },
+    "start_date": {
+      "format": "date-time",
+      "title": "Start Date",
+      "type": "string"
+    },
+    "latitude": {
+      "domain": "latitude",
+      "maxLength": 16,
+      "title": "Latitude",
+      "type": "string"
+    },
+    "longitude": {
+      "domain": "longitude",
+      "maxLength": 16,
+      "title": "Longitude",
+      "type": "string"
+    }
+  },
+  "required": [
+    "customer_name",
+    "device_name",
+    "device_type_name",
+    "service_name",
+    "start_date",
+    "latitude",
+    "longitude"
+  ],
+  "title": "Activation",
+  "type": "object"
+}

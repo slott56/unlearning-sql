@@ -1,16 +1,39 @@
 [build-system]
-requires = [ "setuptools >= 61.0.0", "wheel >= 0.37.0"]
+requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "unlearning-sql"
+description = "Components and examples for the Unlearning SQL book."
+readme = "README.rst"
+requires-python = ">=3.12"
+version = "2024.08"
+
+# LaTeX book is 6x9 size.
+# line-length = 60 # for LaTeX font size \\small
+# line-length = 74 # for LaTeX font size \\scriptsize
+# \\tiny might be too small.
+[tool.ruff]
+line-length = 72
+indent-width = 4
+target-version = "py312"
 
 [tool.tox]
 legacy_tox_ini = """
 [tox]
 skipsdist = true
+base_python = python3.12
   
 [testenv]
 deps =
-    -r requirements.txt
-commands = 
-    pytest
+    -r requirements-test.txt
+commands_pre =
+    pip-sync requirements.txt requirements-test.txt
+setenv =
+    PYTHONPATH=src
+commands =
+    ruff format src
+    pytest -vv
+    pyright src
     behave
 """

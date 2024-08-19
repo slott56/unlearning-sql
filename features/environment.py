@@ -8,12 +8,12 @@ def before_all(context):
     Create test database and global connection.
     Each feature creates and drops the feature's schema.
     """
-    connection = sqlite3.connect("temp.db")
+    connection = sqlite3.connect("data/temp.db")
     context.config.connection = connection
 
 def after_all(context):
     """Remove test database"""
-    Path("temp.db").unlink()
+    Path("data/temp.db").unlink()
     
 def before_feature(context, feature):
     print(f"Building schema for {feature}")
