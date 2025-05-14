@@ -1,0 +1,3 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{result} \PYG{o}{=} \PYG{n+nb}{map}\PYG{p}{(}\PYG{n}{row\PYGZus{}builder}\PYG{p}{,} \PYG{n}{where}\PYG{p}{)}
+\end{Verbatim}

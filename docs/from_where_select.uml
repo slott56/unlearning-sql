@@ -1,0 +1,14 @@
+@startuml
+'https://plantuml.com/activity-diagram-beta
+
+start
+
+: FROM product(table, ...);
+
+: WHERE filter(condition);
+
+: SELECT map(expr, ...);
+
+stop
+
+@enduml

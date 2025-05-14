@@ -1,0 +1,3 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{from\PYGZus{}} \PYG{o}{=} \PYG{n}{itertools}\PYG{o}{.}\PYG{n}{product}\PYG{p}{(}\PYG{n}{t1}\PYG{p}{,} \PYG{n}{t2}\PYG{p}{,} \PYG{o}{...}\PYG{p}{)}
+\end{Verbatim}

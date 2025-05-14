@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{from\PYGZus{}} \PYG{o}{=} \PYG{n}{itertools}\PYG{o}{.}\PYG{n}{product}\PYG{p}{(}\PYG{o}{...}\PYG{p}{)}
+\PYG{n}{where} \PYG{o}{=} \PYG{n+nb}{filter}\PYG{p}{(}\PYG{n}{condition}\PYG{p}{,} \PYG{n}{from\PYGZus{}}\PYG{p}{)}
+\PYG{n}{select} \PYG{o}{=} \PYG{n+nb}{map}\PYG{p}{(}\PYG{n}{row\PYGZus{}builder}\PYG{p}{,} \PYG{n}{where}\PYG{p}{)}
+\PYG{n}{groups} \PYG{o}{=} \PYG{n}{group\PYGZus{}reduce}\PYG{p}{(}\PYG{n}{select}\PYG{p}{)}
+\PYG{n}{aggregates} \PYG{o}{=} \PYG{n+nb}{map}\PYG{p}{(}\PYG{n}{agg\PYGZus{}row\PYGZus{}builder}\PYG{p}{,} \PYG{n}{groups}\PYG{p}{)}
+\PYG{n}{result} \PYG{o}{=} \PYG{n+nb}{filter}\PYG{p}{(}\PYG{n}{having\PYGZus{}condition}\PYG{p}{,} \PYG{n}{aggregates}\PYG{p}{)}
+\end{Verbatim}

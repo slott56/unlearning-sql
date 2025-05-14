@@ -1,0 +1,6 @@
+\beamer@sectionintoc {1}{SQL Overuse}{3}{0}{1}
+\beamer@sectionintoc {2}{SQL Design Patterns}{8}{0}{2}
+\beamer@sectionintoc {3}{Python Implementation Patterns}{12}{0}{3}
+\beamer@sectionintoc {4}{About Those Join Algorithms}{21}{0}{4}
+\beamer@sectionintoc {5}{Group By and Having --- The Good Stuff}{26}{0}{5}
+\beamer@sectionintoc {6}{Conclusion}{30}{0}{6}

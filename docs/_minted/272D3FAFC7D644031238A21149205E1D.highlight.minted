@@ -1,0 +1,5 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{n}{where} \PYG{o}{=} \PYG{p}{(}\PYG{n}{row\PYGZus{}tuple}
+    \PYG{k}{for} \PYG{n}{row\PYGZus{}tuple} \PYG{o+ow}{in} \PYG{n}{from\PYGZus{}}
+        \PYG{k}{if} \PYG{n}{c}\PYG{p}{(}\PYG{n}{row\PYGZus{}tuple}\PYG{p}{)}\PYG{p}{)}
+\end{MintedVerbatim}

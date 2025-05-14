@@ -1,0 +1,3 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{where} \PYG{o}{=} \PYG{p}{(}\PYG{n}{row} \PYG{k}{for} \PYG{n}{row} \PYG{o+ow}{in} \PYG{n}{from\PYGZus{}} \PYG{k}{if} \PYG{n}{c}\PYG{p}{(}\PYG{n}{row}\PYG{p}{))}
+\end{Verbatim}

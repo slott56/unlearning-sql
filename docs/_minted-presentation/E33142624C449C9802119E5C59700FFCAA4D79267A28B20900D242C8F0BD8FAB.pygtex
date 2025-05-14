@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{result} \PYG{o}{=} \PYG{n+nb}{list}\PYG{p}{(}
+    \PYG{p}{(}\PYG{n}{ex1}\PYG{p}{(}\PYG{n}{row\PYGZus{}tuple}\PYG{p}{),} \PYG{n}{ex2}\PYG{p}{(}\PYG{n}{row\PYGZus{}tuple}\PYG{p}{),} \PYG{o}{...}\PYG{p}{)}
+    \PYG{k}{for} \PYG{n}{row\PYGZus{}tuple} \PYG{o+ow}{in} \PYG{n}{where}\PYG{p}{)}
+\end{Verbatim}

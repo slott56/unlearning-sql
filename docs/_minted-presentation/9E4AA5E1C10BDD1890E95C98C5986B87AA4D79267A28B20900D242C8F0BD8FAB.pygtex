@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{def} \PYG{n+nf}{c}\PYG{p}{(}\PYG{n}{row}\PYG{p}{:} \PYG{n+nb}{tuple}\PYG{p}{[}\PYG{n+nb}{dict}\PYG{p}{[}\PYG{n+nb}{str}\PYG{p}{,} \PYG{n}{Any}\PYG{p}{],} \PYG{o}{...}\PYG{p}{])} \PYG{o}{\PYGZhy{}\PYGZgt{}} \PYG{n+nb}{bool}\PYG{p}{:}
+    \PYG{n}{t1}\PYG{p}{,} \PYG{n}{t2}\PYG{p}{,} \PYG{n}{t3} \PYG{o}{=} \PYG{n}{row}
+    \PYG{k}{return} \PYG{p}{(}
+        \PYG{n}{t1}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}rowid\PYGZsq{}}\PYG{p}{]} \PYG{o}{==} \PYG{n}{t2}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}foreign\PYGZus{}key\PYGZsq{}}\PYG{p}{]}
+        \PYG{o+ow}{and} \PYG{n}{t2}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}some\PYGZus{}key\PYGZsq{}}\PYG{p}{]} \PYG{o}{==} \PYG{n}{t3}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}whatever\PYGZsq{}}\PYG{p}{]}
+    \PYG{p}{)}
+\end{Verbatim}

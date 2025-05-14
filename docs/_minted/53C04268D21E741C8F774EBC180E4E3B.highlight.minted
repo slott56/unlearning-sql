@@ -1,0 +1,16 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{from}\PYG{+w}{ }\PYG{n+nn}{collections}\PYG{+w}{ }\PYG{k+kn}{import} \PYG{n}{defaultdict}
+\PYG{k+kn}{from}\PYG{+w}{ }\PYG{n+nn}{operator}\PYG{+w}{ }\PYG{k+kn}{import} \PYG{n}{itemgetter}
+\PYG{c+c1}{\PYGZsh{} Partition}
+\PYG{n}{groups} \PYG{o}{=} \PYG{n}{defaultdict}\PYG{p}{(}\PYG{n+nb}{list}\PYG{p}{)}
+\PYG{k}{for} \PYG{n}{row\PYGZus{}tuple} \PYG{o+ow}{in} \PYG{n}{where}\PYG{p}{:}
+    \PYG{n}{key} \PYG{o}{=} \PYG{p}{(}\PYG{n}{k\PYGZus{}1}\PYG{p}{(}\PYG{n}{row\PYGZus{}tuple}\PYG{p}{)}\PYG{p}{,} \PYG{n}{k\PYGZus{}2}\PYG{p}{(}\PYG{n}{row\PYGZus{}tuple}\PYG{p}{)}\PYG{p}{,} \PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{p}{)}
+    \PYG{n}{groups}\PYG{p}{[}\PYG{n}{key}\PYG{p}{]}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{row\PYGZus{}tuple}\PYG{p}{)}
+\PYG{c+c1}{\PYGZsh{} Aggregate}
+\PYG{n}{group\PYGZus{}by} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}
+\PYG{k}{for} \PYG{n}{key}\PYG{p}{,} \PYG{n}{group} \PYG{o+ow}{in} \PYG{n}{groups}\PYG{p}{:}
+    \PYG{n}{agg\PYGZus{}1} \PYG{o}{=} \PYG{n}{some\PYGZus{}function}\PYG{p}{(}\PYG{n}{group}\PYG{p}{)}
+    \PYG{n}{agg\PYGZus{}2} \PYG{o}{=} \PYG{n}{mean}\PYG{p}{(}\PYG{n}{row}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{value}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]} \PYG{k}{for} \PYG{n}{row} \PYG{o+ow}{in} \PYG{n}{group}\PYG{p}{)}
+    \PYG{n}{agg\PYGZus{}3} \PYG{o}{=} \PYG{n+nb}{sum}\PYG{p}{(}\PYG{n+nb}{map}\PYG{p}{(}\PYG{n}{itemgetter}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{name}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}\PYG{p}{,} \PYG{n}{group}\PYG{p}{)}\PYG{p}{)}
+    \PYG{n}{group\PYGZus{}by}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{p}{(}\PYG{n}{key}\PYG{p}{,} \PYG{n}{agg\PYGZus{}1}\PYG{p}{,} \PYG{n}{agg\PYGZus{}2}\PYG{p}{,} \PYG{n}{agg\PYGZus{}3}\PYG{p}{)}\PYG{p}{)}
+\end{MintedVerbatim}
