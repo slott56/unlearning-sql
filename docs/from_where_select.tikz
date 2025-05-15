@@ -9,21 +9,21 @@
 ,pstyle3/.style={color=plantucolor0002,line width=1.0pt}
 ,pstyle4/.style={color=plantucolor0002,fill=plantucolor0002,line width=1.0pt}
 ]
-\draw[pstyle0] (92.6977pt,20pt) ellipse (10pt and 10pt);
-\draw[pstyle1] (12.3244pt,66.8994pt) arc (180:270:16.8994pt) -- (29.2238pt,50pt) -- (156.1715pt,50pt) arc (270:360:16.8994pt) -- (173.0709pt,66.8994pt) -- (173.0709pt,66.8994pt) arc (0:90:16.8994pt) -- (156.1715pt,83.7988pt) -- (29.2238pt,83.7988pt) arc (90:180:16.8994pt) -- (12.3244pt,66.8994pt) -- cycle;
-\node at (22.3244pt,60pt)[below right,color=black]{ FROM product(table, ...)};
-\draw[pstyle1] (11pt,120.6982pt) arc (180:270:16.8994pt) -- (27.8994pt,103.7988pt) -- (157.4959pt,103.7988pt) arc (270:360:16.8994pt) -- (174.3953pt,120.6982pt) -- (174.3953pt,120.6982pt) arc (0:90:16.8994pt) -- (157.4959pt,137.5977pt) -- (27.8994pt,137.5977pt) arc (90:180:16.8994pt) -- (11pt,120.6982pt) -- cycle;
-\node at (21pt,113.7988pt)[below right,color=black]{ WHERE filter(condition)};
-\draw[pstyle1] (16.9077pt,174.4971pt) arc (180:270:16.8994pt) -- (33.8072pt,157.5977pt) -- (151.5882pt,157.5977pt) arc (270:360:16.8994pt) -- (168.4876pt,174.4971pt) -- (168.4876pt,174.4971pt) arc (0:90:16.8994pt) -- (151.5882pt,191.3965pt) -- (33.8072pt,191.3965pt) arc (90:180:16.8994pt) -- (16.9077pt,174.4971pt) -- cycle;
-\node at (26.9077pt,167.5977pt)[below right,color=black]{ SELECT map(expr, ...)};
-\draw[color=plantucolor0000,line width=1.0pt] (92.6977pt,222.3965pt) ellipse (11pt and 11pt);
-\draw[pstyle0] (92.6977pt,222.3965pt) ellipse (6pt and 6pt);
-\draw[pstyle3] (92.6977pt,30pt) -- (92.6977pt,50pt);
-\draw[pstyle4] (88.6977pt,40pt) -- (92.6977pt,50pt) -- (96.6977pt,40pt) -- (92.6977pt,44pt) -- cycle;
-\draw[pstyle3] (92.6977pt,83.7988pt) -- (92.6977pt,103.7988pt);
-\draw[pstyle4] (88.6977pt,93.7988pt) -- (92.6977pt,103.7988pt) -- (96.6977pt,93.7988pt) -- (92.6977pt,97.7988pt) -- cycle;
-\draw[pstyle3] (92.6977pt,137.5977pt) -- (92.6977pt,157.5977pt);
-\draw[pstyle4] (88.6977pt,147.5977pt) -- (92.6977pt,157.5977pt) -- (96.6977pt,147.5977pt) -- (92.6977pt,151.5977pt) -- cycle;
-\draw[pstyle3] (92.6977pt,191.3965pt) -- (92.6977pt,211.3965pt);
-\draw[pstyle4] (88.6977pt,201.3965pt) -- (92.6977pt,211.3965pt) -- (96.6977pt,201.3965pt) -- (92.6977pt,205.3965pt) -- cycle;
+\draw[pstyle0] (109.4787pt,20pt) ellipse (10pt and 10pt);
+\draw[pstyle1] (29.1055pt,66.8994pt) arc (180:270:16.8994pt) -- (46.0049pt,50pt) -- (172.9526pt,50pt) arc (270:360:16.8994pt) -- (189.852pt,66.8994pt) -- (189.852pt,66.8994pt) arc (0:90:16.8994pt) -- (172.9526pt,83.7988pt) -- (46.0049pt,83.7988pt) arc (90:180:16.8994pt) -- (29.1055pt,66.8994pt) -- cycle;
+\node at (39.1055pt,60pt)[below right,color=black]{ FROM product(table, ...)};
+\draw[pstyle1] (11pt,120.6982pt) arc (180:270:16.8994pt) -- (27.8994pt,103.7988pt) -- (191.0581pt,103.7988pt) arc (270:360:16.8994pt) -- (207.9575pt,120.6982pt) -- (207.9575pt,120.6982pt) arc (0:90:16.8994pt) -- (191.0581pt,137.5977pt) -- (27.8994pt,137.5977pt) arc (90:180:16.8994pt) -- (11pt,120.6982pt) -- cycle;
+\node at (21pt,113.7988pt)[below right,color=black]{ WHERE filter(condition, from)};
+\draw[pstyle1] (22.0645pt,174.4971pt) arc (180:270:16.8994pt) -- (38.9639pt,157.5977pt) -- (179.9936pt,157.5977pt) arc (270:360:16.8994pt) -- (196.893pt,174.4971pt) -- (196.893pt,174.4971pt) arc (0:90:16.8994pt) -- (179.9936pt,191.3965pt) -- (38.9639pt,191.3965pt) arc (90:180:16.8994pt) -- (22.0645pt,174.4971pt) -- cycle;
+\node at (32.0645pt,167.5977pt)[below right,color=black]{ SELECT map(expr, where)};
+\draw[color=plantucolor0000,line width=1.0pt] (109.4787pt,222.3965pt) ellipse (11pt and 11pt);
+\draw[pstyle0] (109.4787pt,222.3965pt) ellipse (6pt and 6pt);
+\draw[pstyle3] (109.4787pt,30pt) -- (109.4787pt,50pt);
+\draw[pstyle4] (105.4787pt,40pt) -- (109.4787pt,50pt) -- (113.4787pt,40pt) -- (109.4787pt,44pt) -- cycle;
+\draw[pstyle3] (109.4787pt,83.7988pt) -- (109.4787pt,103.7988pt);
+\draw[pstyle4] (105.4787pt,93.7988pt) -- (109.4787pt,103.7988pt) -- (113.4787pt,93.7988pt) -- (109.4787pt,97.7988pt) -- cycle;
+\draw[pstyle3] (109.4787pt,137.5977pt) -- (109.4787pt,157.5977pt);
+\draw[pstyle4] (105.4787pt,147.5977pt) -- (109.4787pt,157.5977pt) -- (113.4787pt,147.5977pt) -- (109.4787pt,151.5977pt) -- cycle;
+\draw[pstyle3] (109.4787pt,191.3965pt) -- (109.4787pt,211.3965pt);
+\draw[pstyle4] (105.4787pt,201.3965pt) -- (109.4787pt,211.3965pt) -- (113.4787pt,201.3965pt) -- (109.4787pt,205.3965pt) -- cycle;
 \end{tikzpicture}

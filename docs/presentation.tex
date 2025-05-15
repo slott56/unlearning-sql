@@ -36,27 +36,29 @@
 \begin{frame}
     \frametitle{SQL is Helpful}
 
+    Folks know SQL.
+
+    \vspace{1em}
     \begin{itemize}
-    \item Folks know SQL.
 
     \item They are fluent in SQL's design patterns.
 
-    \item They find it hard to convert SQL designs to Python.
+    \item Some find it hard to convert SQL designs to Python.
     \end{itemize}
 
     \vspace{1em}
-    This talk should help clarify SQL from a Python perspective
+    This talk should help clarify SQL from a Python perspective.
 \end{frame}
 
 \begin{frame}
     \frametitle{Database Overuse}
 
-    Given a problem requiring a SQL-like summary.
+    Given a processing problem...\pause
 
     \begin{enumerate}
-        \item Define tables
-        \item Quick load script
-        \item SQL \texttt{SELECT}
+        \item Define (and normalize) tables
+        \item Write, and debug a load script
+        \item Write, and debug the SQL
     \end{enumerate}
 
     Easy, right? \pause
@@ -78,11 +80,12 @@
 
     Developer struggling with transient data processing.
 
-    The app had repeated \textbf{Create-Load-Query-Drop} cycles.
+    The app does repeated \textbf{Create-Load-Query-Drop} cycles.
 
-    The Drop (it turns out) is both unpredictable and slow.
+    The \texttt{DROP} (it turns out) is both unpredictable and slow.
 
-    (Even if it's SQLite, there are overheads.)
+    \vspace{1em}
+    (Even SQLite introduces overheads.)
 \end{frame}
 
 \begin{frame}
@@ -128,7 +131,7 @@
 
     \begin{itemize}
     \item[]
-        \texttt{FROM t1, t2, ...}
+        \texttt{\# FROM t1, t2, ...}
 
         \begin{minted}[autogobble]{python}
         from_ = itertools.product(t1, t2, ...)
@@ -136,7 +139,7 @@
 
         \vspace{1em}
     \item[]
-        \texttt{WHERE c}
+        \texttt{\# WHERE c}
 
         \begin{minted}[autogobble]{python}
         where = (row_tuple
@@ -146,7 +149,7 @@
 
         \vspace{1em}
     \item[]
-        \texttt{SELECT ex1, ex2, ...}
+        \texttt{\# SELECT ex1, ex2, ...}
 
         \begin{minted}[autogobble]{python}
         result = list(
@@ -162,15 +165,17 @@
     \frametitle{Good and Bad}
 
     \begin{itemize}
-    \item The Python code matches the SQL.
+    \item The SQL maps directly to Python code.
 
-    \item A lot more syntax: \texttt{WHERE expr} becomes \texttt{(r for r in from\_ if expr)},
+    \item Python has more syntax: \\ \texttt{WHERE \textit{expr}} becomes \texttt{(r for r in from\_ if \textit{expr})}.
 
     \item \texttt{SELECT expr, expr, expr} is even \textbf{more} complicated-looking.
     \end{itemize}
 
     \vspace{1em}
-    Let's look at details. All the syntax means there are a lot of places to add processing.
+    Let's look at details.
+
+    All the syntax means there are a lot of places to add processing.
 \end{frame}
 
 \section{Python Implementation Patterns}
@@ -178,14 +183,13 @@
 \begin{frame}[fragile]
     \frametitle{The From Clause}
 
-    The \texttt{FROM} tables need to be iterable sequences.
+    Each of the \texttt{FROM} tables needs to be iterable sequences.
 
     \texttt{list[dict[str, Any]]}
 
     \vspace{1em}
     \begin{minted}[autogobble]{python}
     from itertools import product
-
     from_ = product(t1, t2, t3)
     \end{minted}
 
@@ -203,11 +207,11 @@
 
         \item It has fancy query algorithms and optimizations. \pause
     \end{itemize}
-    \end{alertblock}
-
     \vspace{1em}
 
     ``Your nonsense is clearly unworkable in general.''
+    \end{alertblock}
+
 \end{frame}
 
 \begin{frame}[fragile]
@@ -223,7 +227,7 @@
 
     \vspace{1em}
 
-    You \textbf{can} do this query optimization in Python, also.\pause
+    You \textbf{can} do query optimization in Python, also.\pause
     \vspace{1em}
 
     We'll get to it.
@@ -276,7 +280,7 @@
 
     \vspace{1em}
     \begin{minted}[autogobble]{python}
-    def e1(row: tuple[dict[str, Any], ...]) -> Any:
+    def ex1(row: tuple[dict[str, Any], ...]) -> Any:
         t1, t2, t3 = row
         if t1['value'] % 2 == 0:
             return t1['value'] // 2
@@ -287,7 +291,21 @@
 \end{frame}
 
 \begin{frame}
-    Okay, \texttt{From}, \texttt{Where}, and \texttt{Select} clauses not awful. \pause
+    \frametitle{Key Point 1}
+
+    \begin{block}{You're not limited}
+        You don't have to write SQL expressions.
+
+        \vspace{1em}
+        You have the \textbf{Vast Python Ecosystem} available.
+        \pause
+
+        \vspace{1em}
+        (Turn on echo effect)
+
+        \Large{Unlimited Computing Power!}
+    \end{block}
+    \pause
 
     \vspace{1em}
 
@@ -301,7 +319,7 @@
     Databases do ``cart-prod'' joins all the time.
 
     \vspace{1em}
-    Very small tables are easier to fetch from disk into cache without wasting time on the additional index read.
+    Very small tables are easier to fetch from disk into cache ignoring any indexes.
 
     \vspace{1em}
     Two common alternative algorithms:
@@ -309,6 +327,9 @@
         \item Sort-Merge Join
         \item Lookup Join
     \end{itemize}
+
+    \vspace{1em}
+    Going to take a shallow look at each.
 \end{frame}
 
 \begin{frame}
@@ -318,6 +339,8 @@
 
     \begin{enumerate}
     \item Sort each table into a consistent order by the join key for that table.
+
+    May need multiple files and the os utility \textbf{sort} command.
 
     \item Create row tuples for matching rows from each sorted table.
     \end{enumerate}
@@ -341,28 +364,46 @@
     The ``Star Schema'' design pattern.
 
     \vspace{1em}
-    Transform each small table into a Python dictionary.
+    \begin{enumerate}
 
-    Then, this:
+    \item Transform each small table into a Python dictionary.
+    \begin{minted}[autogobble]{python}
+    small_1 = {r['pk']: row for row in table_1}
+    \end{minted}
+    etc.
+
+    \item Join.
     \begin{minted}[autogobble]{python}
     from_ = (
-        (r, small_1[r['key_1']], small_2[r['key_2']])
+        (r, small_1[r['fk_1']], small_2[r['fk_2']])
         for r in big_table
     )
     \end{minted}
+
+    \end{enumerate}
+
 \end{frame}
 
 \begin{frame}
-    Okay.
+    \frametitle{Key Point 2}
+
+    \begin{block}{You're not limited}
+        You don't have to wrestle with database index and query optimizations.
+
+        \vspace{1em}
+        You have the \textbf{Vast Python Ecosystem} available.
+        \pause
+
+        \vspace{1em}
+        (Turn on echo effect)
+
+        \Large{Unlimited Computing Power!}
+    \end{block}
+    \pause
+
     \vspace{1em}
 
-    Fine.
-    \vspace{1em}
-
-    The \texttt{From}, \texttt{Where}, and \texttt{Select} clauses have really fast pure-Python implementations.
-    \vspace{1em}
-
-    What about \texttt{Group by} and \texttt{Having}?  \pause
+    What about \texttt{Group by} and \texttt{Having}?
 
     They can't be simple.
 \end{frame}
@@ -371,46 +412,43 @@
 \begin{frame}
     \frametitle{Group By Clause(s)}
 
-    The \textbf{Group By} process involves two separate things.
-    \begin{itemize}
-        \item The expressions (and column names) in the \texttt{GROUP BY} clause.
-
-        \vspace{0.8em}
-        These expressions define a kind of \texttt{reduce()} function to build the groups.
+    The \textbf{Group By} process involves two separate steps.
+    \begin{enumerate}
+        \item \textbf{Partition.} The expressions in the \texttt{GROUP BY} clause define keys to build groups.
 
         \vspace{1em}
-        \item The Aggregate Functions in the \texttt{SELECT} clause then get applied to each group's subset of rows.
-    \end{itemize}
-
-    \vspace{1em}
-
-    Syntax Oddity: Aggregates written in the \texttt{SELECT} clause.
-    Some in the \texttt{HAVING} clause.
-
-\end{frame}
-
-\begin{frame}
-    \frametitle{Group By Implementation}
-
-    \begin{enumerate}
-        \item Parition into groups, \texttt{defaultdict(list)}.
-
-        For each row:
-        \begin{enumerate}
-            \item Create keys
-            \item Append row to groups
-        \end{enumerate}
-
-        \item For each group:
-        \begin{enumerate}
-            \item Evaluate all the aggregate functions.
-        \end{enumerate}
-
+        \item \textbf{Aggregate.} The aggregate functions from the \texttt{SELECT} (and \texttt{HAVING}) are \texttt{reduce()} operations to create single group values.
     \end{enumerate}
 
     \vspace{1em}
-    This builds a new table from the keys and aggregate functions for each group.
+
+    Syntax Oddity: Group-By aggregates in the \texttt{SELECT} clause.
+    And in the \texttt{HAVING} clause.
+
 \end{frame}
+
+%\begin{frame}
+%    \frametitle{Group By Implementation}
+%
+%    \begin{enumerate}
+%        \item Partition into groups, \texttt{defaultdict(list)}.
+%
+%        For each row:
+%        \begin{enumerate}
+%            \item Create keys
+%            \item Append row to groups
+%        \end{enumerate}
+%
+%        \item For each group:
+%        \begin{enumerate}
+%            \item Evaluate all the aggregate functions.
+%        \end{enumerate}
+%
+%    \end{enumerate}
+%
+%    \vspace{1em}
+%    This builds a new table from the keys and aggregate functions for each group.
+%\end{frame}
 
 \begin{frame}[fragile]
     \frametitle{Group By Implementation}
@@ -437,13 +475,13 @@
 \begin{frame}
     \frametitle{Having Clause}
 
-    The \texttt{Having} process is (nearly) the same as the \texttt{Where} process.
+    The \textbf{Having} process is (nearly) the same as the \textbf{Where} process.
 
     It's an expression to filter the groups.
 
     \vspace{1em}
 
-    SQL syntax uses aggregate functions in the \texttt{Having} clause.
+    SQL syntax uses aggregate functions in the \texttt{HAVING} clause.
 
     \begin{itemize}
         \item These are yet more group-by aggregates.
@@ -453,14 +491,34 @@
 
 \end{frame}
 
+\begin{frame}
+    \frametitle{Key Point 3}
+
+        \begin{block}{You're not limited}
+        The Group-By operation is a \texttt{defaultdict(list)}.
+
+        Maybe a \texttt{Counter}.
+
+        \vspace{1em}
+        You have the \textbf{Vast Python Ecosystem} available.
+        \pause
+
+        \vspace{1em}
+        (Turn on echo effect)
+
+        \Large{Unlimited Computing Power!}
+    \end{block}
+
+\end{frame}
+
 \section{Conclusion}
 \begin{frame}
     \frametitle{Conclusion}
 
     \begin{itemize}
-        \item SQL is helpful to summarize a desired result.
-        \item SQL can be overused.
-        \item A database is a lot of overhead. Avoid it.
+        \item SQL has helpful patterns to describe a desired result.
+        \item SQL can be limiting.
+        \item An actual database engine introduces a lot of overhead. \\ Avoid it.
     \end{itemize}
     \vspace{1em}
     Think of SQL as a design language.\pause
@@ -472,19 +530,22 @@
     \frametitle{SQL}
 
     \begin{itemize}
-        \item SQL describes a pipeline of steps
+        \item SQL describes a pipeline of steps:
         \[
             \textrm{From} \rightarrow \textrm{Where} \rightarrow \textrm{Select} \rightarrow \textrm{Group By} \rightarrow \textrm{Having}
         \]
 
-        \item Or. As nested functions
+        \item Or, nested functions:
         \[
-            H\Biggl(G_A \biggl (G_P \biggl( S \Bigl(W \bigl( F(t_1, t_2, ...) \bigr) \Bigr) \biggr)\biggr)\Biggr)
+            H\Biggl(G_a \biggl (G_p \biggl( S \Bigl(W \bigl( F(t_1, t_2, ...) \bigr) \Bigr) \biggr)\biggr)\Biggr)
         \]
 
         \end{itemize}
 
-        Nested functions seem confusing.
+        \vspace{1em}
+        \textbf{Important}: The \texttt{select-from-where} ordering of clauses is confusing.
+
+        That's not how it works.
 
 \end{frame}
 
@@ -492,7 +553,7 @@
     \frametitle{SQL to Python}
     In Python, \texttt{Select} is a stack of generator expressions
 
-    \begin{minted}[autogobble,fontsize=\scriptsize]{python}
+    \begin{minted}[autogobble]{python}
         from_ = itertools.product(...)
         where = filter(condition, from_)
         select = map(row_builder, where)
@@ -501,6 +562,7 @@
         result = filter(having_condition, aggregates)
     \end{minted}
 
+    \vspace{1em}
     Most steps are lazy and don't compute big intermediate results. \pause
 
     The \texttt{group\_reduce()} function does compute a big result.
@@ -509,18 +571,25 @@
 
 \begin{frame}
     \frametitle{Call to Action}
-    Stop using SQL as a data transformation tool.
+    Stop using SQL (and a database) as a data transformation tool.
 
     \vspace{1em}
     Continue using SQL as a design aid.
+
+    \vspace{1em}
+    SQL design patterns are useful.
+
+    \vspace{1em}
+    Look at SQL as a pipeline of functional transformations.
 \end{frame}
 
 \begin{frame}
     \frametitle{More Information}
 
     \begin{itemize}
-        \item \textit{Unlearning SQL} (Available from Amazon and Lulu) \vspace{1em}
+        \item \textit{Unlearning SQL} book (Available from Amazon and Lulu) \vspace{1em}
         \item \texttt{\underline{https://github.com/slott56/functional-SQL}} \vspace{1em}
+        \item \texttt{\underline{https://github.com/slott56/unlearning-sql}} \vspace{1em}
         \item \texttt{\underline{https://fosstodon.org/@slott56}}
     \end{itemize}
 \end{frame}

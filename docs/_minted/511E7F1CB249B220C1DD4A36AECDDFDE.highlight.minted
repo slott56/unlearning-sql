@@ -1,5 +1,4 @@
 \begin{MintedVerbatim}[commandchars=\\\{\}]
 \PYG{k+kn}{from}\PYG{+w}{ }\PYG{n+nn}{itertools}\PYG{+w}{ }\PYG{k+kn}{import} \PYG{n}{product}
-
 \PYG{n}{from\PYGZus{}} \PYG{o}{=} \PYG{n}{product}\PYG{p}{(}\PYG{n}{t1}\PYG{p}{,} \PYG{n}{t2}\PYG{p}{,} \PYG{n}{t3}\PYG{p}{)}
 \end{MintedVerbatim}

@@ -1,7 +1,7 @@
 \frametitle{SQL to Python}
     In Python, \texttt{Select} is a stack of generator expressions
 
-    \begin{minted}[autogobble,fontsize=\scriptsize]{python}
+    \begin{minted}[autogobble]{python}
         from_ = itertools.product(...)
         where = filter(condition, from_)
         select = map(row_builder, where)
@@ -10,6 +10,7 @@
         result = filter(having_condition, aggregates)
     \end{minted}
 
+    \vspace{1em}
     Most steps are lazy and don't compute big intermediate results. \pause
 
     The \texttt{group\_reduce()} function does compute a big result.

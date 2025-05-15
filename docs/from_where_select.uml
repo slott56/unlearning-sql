@@ -5,9 +5,9 @@ start
 
 : FROM product(table, ...);
 
-: WHERE filter(condition);
+: WHERE filter(condition, from);
 
-: SELECT map(expr, ...);
+: SELECT map(expr, where);
 
 stop
 

@@ -1,0 +1,3 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{n}{small\PYGZus{}1} \PYG{o}{=} \PYG{p}{\PYGZob{}}\PYG{n}{r}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{pk}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}\PYG{p}{:} \PYG{n}{row} \PYG{k}{for} \PYG{n}{row} \PYG{o+ow}{in} \PYG{n}{table\PYGZus{}1}\PYG{p}{\PYGZcb{}}
+\end{MintedVerbatim}

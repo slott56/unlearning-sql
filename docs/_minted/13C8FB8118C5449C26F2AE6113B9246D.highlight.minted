@@ -1,0 +1,6 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{n}{from\PYGZus{}} \PYG{o}{=} \PYG{p}{(}
+    \PYG{p}{(}\PYG{n}{r}\PYG{p}{,} \PYG{n}{small\PYGZus{}1}\PYG{p}{[}\PYG{n}{r}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{fk\PYGZus{}1}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}\PYG{p}{]}\PYG{p}{,} \PYG{n}{small\PYGZus{}2}\PYG{p}{[}\PYG{n}{r}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{fk\PYGZus{}2}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}\PYG{p}{]}\PYG{p}{)}
+    \PYG{k}{for} \PYG{n}{r} \PYG{o+ow}{in} \PYG{n}{big\PYGZus{}table}
+\PYG{p}{)}
+\end{MintedVerbatim}
