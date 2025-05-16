@@ -9,6 +9,8 @@
 \usepackage{tikz}
 \usepackage{tikzscale}
 \usepackage{minted}
+\usepackage{hyperref}
+\usepackage{qrcode}
 
 \usetheme{PaloAlto}
 \usecolortheme{seagull}
@@ -25,6 +27,14 @@
 \frame{
     \titlepage
 }
+
+\begin{frame}
+    \frametitle{Link to Slide Deck}
+    \qrcode[link]{https://github.com/slott56/unlearning-sql}
+    \hfill
+    \underline{https://github.com/slott56/unlearning-sql}
+\end{frame}
+
 
 \begin{frame}
 \frametitle{Table of Contents}
@@ -267,8 +277,7 @@
     \textbf{Context:}
 
     \begin{minted}[autogobble]{python}
-    result = list(
-        (ex1(row_tuple), ex2(row_tuple), ...)
+    result = ((ex1(row_tuple), ex2(row_tuple), ...)
         for row_tuple in where)
     \end{minted}
 
@@ -592,6 +601,11 @@
         \item \texttt{\underline{https://github.com/slott56/unlearning-sql}} \vspace{1em}
         \item \texttt{\underline{https://fosstodon.org/@slott56}}
     \end{itemize}
+
+    \begin{center}
+    \qrcode[link]{https://github.com/slott56/unlearning-sql}
+    \end{center}
+
 \end{frame}
 
 \end{document}
