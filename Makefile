@@ -1,4 +1,4 @@
-.PHONY : diagrams db_prep sql_load python_load test acceptance
+.PHONY : diagrams db_prep sql_load python_load test static acceptance
 
 SOURCE_DIAGRAMS = docs/database.png
 
@@ -31,8 +31,10 @@ python_load: data/unlearning_sql.db data/activation_source.csv src/python_load_p
 	python src/python_extract_1.py --db data/unlearning_sql.db -o data/service_name_counts.csv
 
 test:
-	PYTHONPATH=src pytest
-	ruff check src
+	tox run
+
+static:
+	tox run -e static
 
 acceptance:
 	behave

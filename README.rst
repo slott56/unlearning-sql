@@ -7,21 +7,17 @@ Components and examples from the Unlearning SQL book.
 Installation
 =============
 
-There are several steps to getting this ready for experimentation.
+We recommend installing **uv** to manage the virtual environment for this project.
+See https://docs.astral.sh/uv/.
+Follow the `Installing uv <https://docs.astral.sh/uv/getting-started/installation/>`_ instructions, if you don't already have **uv**.
 
-1.  Create a virtual environment with Python 3.12.
-    Use venv or Poetry or hatch or conda.
-
-    Conda example:
+1.  Clone or download this Git repository, https://github.com/slott56/unlearning-sql.
 
     ..  code-block:: bash
 
-        conda create -n unlearning-sql python=3.12
-        conda activate unlearning-sql
+        git clone https://github.com/slott56/unlearning-sql.git
 
-2.  Clone or download this https://github.com/slott56/unlearning-sql repository.
-
-3.  Change to the downloaded directory.
+2.  Change to the downloaded directory.
 
     ..  code-block:: bash
 
@@ -31,26 +27,25 @@ There are several steps to getting this ready for experimentation.
 
     ..  code-block:: bash
 
-        python -m pip install -r requirements.txt
+        uv sync
 
-4.  Install the packages to do unit testing.
+4.  Optionally, install the packages to do development work, like unit testing or running the acceptance test suite.
 
     ..  code-block:: bash
 
-        python -m pip install -r requirements-test.txt
+        uv sync --dev
 
-Upgrades
---------
+Activate the Virtual Environment
+================================
 
-To get **all** the latest and greatest versions of package, use pip-tools.
+It's essential to activate the virtual environment for this (or any) Python project before doing any real work.
 
 ..  code-block:: bash
 
-    pip-compile --upgrade
-    pip-compile --upgrade requirements-test.in
+    source .venv/bin/activate
 
-    python -m pip install --upgrade -r requirements.txt
-    python -m pip install --upgrade -r requirements-test.txt
+For Windows users, the command is slightly different.
+See the https://docs.python.org/3/library/venv.html documentation for the PowerShell command.
 
 General Operation
 =================

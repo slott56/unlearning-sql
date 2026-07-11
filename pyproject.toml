@@ -1,13 +1,20 @@
-[build-system]
-requires = ["setuptools"]
-build-backend = "setuptools.build_meta"
-
 [project]
 name = "unlearning-sql"
 description = "Components and examples for the Unlearning SQL book."
+dependencies = [
+    "datasynthtool",
+    "functional-sql",
+    "jsonschema[format]>=4.26.0",
+    "pydantic>=2.13.4",
+    "python-dateutil>=2.9.0.post0",
+]
 readme = "README.rst"
 requires-python = ">=3.12"
-version = "2024.08"
+version = "2026.07"
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
 
 # LaTeX book is 6x9 size.
 # line-length = 60 # for LaTeX font size \\small
@@ -16,24 +23,38 @@ version = "2024.08"
 [tool.ruff]
 line-length = 72
 indent-width = 4
-target-version = "py312"
+target-version = "py314"
 
 [tool.tox]
-legacy_tox_ini = """
-[tox]
-skipsdist = true
-base_python = python3.12
-  
-[testenv]
-deps =
-    -r requirements-test.txt
-commands_pre =
-    pip-sync requirements.txt requirements-test.txt
-setenv =
-    PYTHONPATH=src
-commands =
-    ruff format src
-    pytest -vv
-    pyright src
-    behave
-"""
+requires = ["tox>=4.19"]
+package = "editable"
+skip_install = true
+base_python = "python>=3.14"
+env_list = ["3.14", "3.13", "3.12"]
+
+[tool.tox.env_run_base]
+description = "Run test under {base_python}"
+runner = "uv-venv-lock-runner"
+deps = ["pytest"]
+commands = [["pytest", "-vv"]]
+
+[tool.tox.env.static]
+deps = ["ruff", "pyright"]
+commands = [
+    ["ruff", "format", "src"],
+    ["pyright", "src"],
+]
+
+[tool.uv.sources]
+datasynthtool = { git = "https://github.com/slott56/DataSynthTool.git", rev = "v2024.8" }
+functional-sql = { git = "https://github.com/slott56/functional-SQL.git", rev = "v2024.8" }
+
+[dependency-groups]
+dev = [
+    "behave>=1.3.3",
+    "pyright>=1.1.411",
+    "pytest>=9.1.1",
+    "ruff>=0.15.21",
+    "tox>=4.56.4",
+    "tox-uv>=1.35.2",
+]

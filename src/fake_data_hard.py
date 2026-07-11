@@ -208,9 +208,7 @@ def make_generator(schema: JSONSchema) -> Any:
                     return LatGenerator(schema)
                 case {"format": "longitude"}:
                     return LonGenerator(schema)
-                case (
-                    _
-                ):  # TODO: https://json-schema.org/understanding-json-schema/reference/string.html#built-in-formats
+                case _:  # TODO: https://json-schema.org/understanding-json-schema/reference/string.html#built-in-formats
                     return StringGenerator(schema)
         case {"type": "boolean"}:
             return BoolGenerator(schema)

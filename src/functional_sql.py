@@ -44,8 +44,10 @@ def example_1(CustTbl, DevTbl, CustDevTbl) -> None:
         funcsql.Select("*")
         .from_(CustTbl, DevTbl, CustDevTbl)
         .where(
-            lambda cr: cr.CustTbl.rowid == cr.CustDevTbl.customer_id
-            and cr.DevTbl.rowid == cr.CustDevTbl.type_id
+            lambda cr: (
+                cr.CustTbl.rowid == cr.CustDevTbl.customer_id
+                and cr.DevTbl.rowid == cr.CustDevTbl.type_id
+            )
         )
     )
     for row in funcsql.fetch(query):
